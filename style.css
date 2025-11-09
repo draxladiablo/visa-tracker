@@ -1,0 +1,327 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body, html {
+    height: 100%;
+    background: linear-gradient(135deg,#0f172a,#06b6d4);
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header/nav */
+header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.25);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 9999;
+}
+
+.header-wrap {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(135deg,#2563eb,#7dd3fc);
+    display: inline-block;
+    transition: transform 0.6s;
+}
+
+.logo:hover { transform: rotate(360deg); }
+
+header h1 { margin-left: 10px; }
+
+nav { margin-left: auto; display: flex; gap: 10px; }
+
+nav button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    background: linear-gradient(135deg,#7dd3fc,#2563eb);
+    color: white;
+    transition: 0.3s;
+    z-index: 10000;
+}
+nav button:hover { box-shadow: 0 6px 15px rgba(0,0,0,0.25); transform: scale(1.05); }
+
+/* Main/pages */
+main { flex: 1; padding: 20px; position: relative; z-index: 1; }
+
+.page {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.45s ease;
+    position: absolute;
+    width: 100%;
+    top: 80px;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.page-active {
+    opacity: 1;
+    transform: translateX(0);
+    position: relative;
+    pointer-events: auto;
+    z-index: 2;
+}
+
+/* Card */
+.card {
+    background: rgba(0,0,0,0.26);
+    padding: 36px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    max-width: 700px;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+input, select {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #c7d2fe;
+    width: 100%;
+    transition: border 0.3s;
+}
+input:focus, select:focus { border-color: #2563eb; outline: none; }
+
+button {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    background: linear-gradient(135deg,#7dd3fc,#2563eb);
+    color: white;
+    transition: 0.2s;
+}
+button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+
+/* Progress bar */
+.progress-bar {
+    background: rgba(255,255,255,0.12);
+    border-radius: 14px;
+    height: 18px;
+    width: 100%;
+    margin-top: 8px;
+}
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 14px;
+    transition: width 0.9s, background 0.3s;
+}
+
+/* color classes */
+.status-pending { background: #facc15 !important; }
+.status-review { background: #fbbf24 !important; }
+.status-progress { background: #f97316 !important; }
+.status-approved { background: #34d399 !important; }
+.status-rejected { background: #f87171 !important; }
+
+/* admin list */
+.adminClient {
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    background: rgba(255,255,255,0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.adminClient > div { display: flex; gap: 8px; align-items: center; }
+
+/* fade out animation */
+.adminClient.fade-out {
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+/* toast */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #34d399;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(-18px);
+    transition: opacity 0.35s, transform 0.35s;
+    z-index: 2000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+/* file preview animation (client view) */
+.file-preview {
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.45s, transform 0.45s;
+}
+.file-preview.show { opacity: 1; transform: translateX(0); }
+
+/* modal (document viewer) */
+.modal { display: none; }
+.modal[aria-hidden="false"] { display: block; }
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 3000;
+}
+
+.modal-panel {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 90%;
+    max-width: 900px;
+    max-height: 85vh;
+    background: rgba(10,10,10,0.98);
+    border-radius: 12px;
+    padding: 16px;
+    z-index: 3001;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+}
+.modal-body {
+    overflow:auto;
+    padding: 8px;
+    display:flex;
+    flex-direction:column;
+    gap: 12px;
+}
+.modal-body img, .modal-body object {
+    max-width:100%;
+    border-radius:8px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.4);
+}
+.modal-footer {
+    display:flex;
+    justify-content:flex-end;
+    margin-top:8px;
+}
+
+.btn-close {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* file meta row inside modal */
+.file-meta {
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    align-items:center;
+    background: rgba(255,255,255,0.02);
+    padding:8px;
+    border-radius:8px;
+}
+
+/* small timestamp text */
+.file-ts { font-size:0.85rem; opacity:0.9; }
+
+/* download button */
+.btn-download {
+    padding:6px 10px;
+    border-radius:8px;
+    background:#10b981;
+    border:none;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* confetti container (if needed) */
+#confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 4000; }
+
+/* footer */
+footer {
+    background: #2563eb;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    font-size: 0.85rem;
+    position: sticky;
+    bottom: 0;
+}
+/* ===== Responsive Styles ===== */
+
+/* Phones (Portrait and small screens) */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    nav button {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+
+    .card {
+        padding: 20px;
+        margin: 10px;
+        max-width: 95%;
+    }
+
+    input, select, button {
+        font-size: 0.9rem;
+    }
+
+    .progress-bar {
+        height: 14px;
+    }
+
+    footer {
+        font-size: 0.75rem;
+        padding: 10px;
+    }
+}
+
+/* Tablets (Medium screens) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .card {
+        max-width: 80%;
+    }
+
+    nav button {
+        font-size: 0.9rem;
+    }
+}

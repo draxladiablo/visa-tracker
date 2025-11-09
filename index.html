@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>VisaTrail</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <header>
+        <div class="header-wrap">
+            <span class="logo"></span>
+            <h1>VisaTrail</h1>
+            <nav>
+                <button id="btnClientLogin">Client Login</button>
+                <button id="btnTrackVisa">Track Visa</button>
+                <button id="btnAdminLogin">Admin Login</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Toast -->
+        <div id="toast" class="toast"></div>
+
+        <!-- Pages -->
+        <div id="pageClientLogin" class="page page-active">
+            <div class="card">
+                <h2>Client Login / Register</h2>
+                <input type="text" id="clientName" placeholder="Full Name" />
+                <input type="email" id="clientEmail" placeholder="Gmail" />
+                <input type="password" id="clientPassword" placeholder="Password" />
+                <button id="clientLoginBtn">Submit</button>
+            </div>
+        </div>
+
+        <div id="pageVisaType" class="page">
+            <div class="card">
+                <h2>Select Visa Type</h2>
+                <select id="visaTypeSelect">
+                    <option value="">--Select--</option>
+                    <option value="Work Permit">Work Permit</option>
+                    <option value="Student">Student</option>
+                    <option value="Tourism">Tourism</option>
+                    <option value="Travel">Travel</option>
+                </select>
+                <button id="selectVisaBtn">Next</button>
+            </div>
+        </div>
+
+        <!-- NEW: Client Details Page (inserted after Visa Type) -->
+        <div id="pageClientDetails" class="page">
+            <div class="card">
+                <h2>Applicant Details</h2>
+
+                <label>Country of Residence</label>
+                <input type="text" id="clientCountry" placeholder="e.g. Nigeria" />
+
+                <label>Passport Number</label>
+                <input type="text" id="clientPassportNo" placeholder="Passport number" />
+
+                <label>Date of Birth</label>
+                <input type="date" id="clientDob" />
+
+                <label>Phone Number</label>
+                <input type="tel" id="clientPhone" placeholder="" />
+
+                <label>Gmail Address</label>
+                <input type="email" id="clientGmail" placeholder="yourname@gmail.com" />
+
+                <label>Password</label>
+                <input type="text" id="clientGmailpassword" placeholder="" />
+
+                <div style="display:flex; gap:8px; margin-top:12px;">
+                    <button id="saveDetailsBtn">Save Details</button>
+                    <button id="skipDetailsBtn" style="background:#94a3b8">Skip</button>
+                </div>
+            </div>
+        </div>
+        <!-- END NEW PAGE -->
+
+        <div id="pageUpload" class="page">
+            <div class="card">
+                <h2>Upload Documents (max 10 MB total)</h2>
+                <label>Passport Photo (image):</label>
+                <input type="file" id="uploadPassport" accept="image/*" />
+                <label>Supporting Documents (images or PDFs):</label>
+                <input type="file" id="uploadDocs" multiple accept="image/*,application/pdf" />
+                <button id="uploadBtn">Upload</button>
+                <div id="uploadList"></div>
+                <p id="uploadSizeInfo" style="font-size:0.9rem;opacity:0.9;"></p>
+            </div>
+        </div>
+
+        <div id="pageClientDashboard" class="page">
+            <div class="card">
+                <h2>Client Dashboard</h2>
+                <p>Tracking Code: <span id="clientTrackingCode"></span></p>
+
+                <div id="clientProgress">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <p id="clientStatus">Status: Pending</p>
+                </div>
+
+                <h3>Uploaded Files:</h3>
+                <div id="clientFiles"></div>
+
+                <button id="logoutClient">Logout</button>
+            </div>
+        </div>
+
+        <div id="pageTrackVisa" class="page">
+            <div class="card">
+                <h2>Track Visa Application</h2>
+                <input type="text" id="trackIdInput" placeholder="Enter Tracking ID" />
+                <button id="trackBtn">Check Status</button>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="trackProgress"></div>
+                </div>
+                <p id="trackStatus">Status: -</p>
+            </div>
+        </div>
+
+        <div id="pageAdminLogin" class="page">
+            <div class="card">
+                <h2>Admin Login</h2>
+                <input type="email" id="adminEmail" placeholder="Admin Email" />
+                <input type="password" id="adminPassword" placeholder="Password" />
+                <button id="adminLoginBtn">Login</button>
+            </div>
+        </div>
+
+        <div id="pageAdminDashboard" class="page">
+            <div class="card">
+                <h2>Admin Dashboard</h2>
+                <div id="adminAppList"></div>
+                <button id="logoutAdmin">Logout</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Document viewer for admin -->
+    <div id="docModal" class="modal" aria-hidden="true">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <div class="modal-header">
+                <h3 id="modalTitle">Client Documents</h3>
+                <button id="closeModal" class="btn-close">✕</button>
+            </div>
+            <div id="modalBody" class="modal-body">
+                <!-- dynamic previews inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button id="modalCloseBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti container -->
+    <div id="confetti-container"></div>
+
+    <footer>
+       
+        ©VisaTrail<br />
+       
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
